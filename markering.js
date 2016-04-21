@@ -16,6 +16,8 @@ $(document).ready(function() {
 
     enable_audio();
 
+    //$(".ovelse_container").fadeOut(0);
+
     $(".dropout_container").fadeOut(0);
 
 
@@ -30,6 +32,12 @@ $(document).ready(function() {
         }
     });
 
+    $(".videolink").click(function() {
+        showSource("video")
+    });
+    $(".textlink").click(function() {
+        showSource("tekst")
+    });
     /*$(".brod_txt").click(function() {
         console.log("clicked brød")
         UserMsgBox("body", "Du har klikket et sted, hvor der ikke umiddelbart er nogle ord, der siger noget om billedsprog");
@@ -87,9 +95,9 @@ function init() {
 function clicked_forklaring(obj) {
 
     if (obj.attr("class") == "txt_select") {
-        var indeks = obj.index();
+        var indeks = obj.index()-1;
     } else {
-        var indeks = obj.index() - 1;
+        var indeks = obj.index()-1;
     }
 
 
@@ -115,7 +123,7 @@ function clicked_word(clicked_object, pos) {
 
 function show_dropdown(posX, posY) {
     UserMsgBox("body", "");
-
+    $(".drop_left").show();
     var active_sentence = $(".markering").eq(active_object).html();
     var dp = "<div class='drop_right col-xs-6 col-sm-6'><h3 class='drop_out_header'>Vælg kategori for: </h3><span class='h4 drop_spm'>&quot;" + active_sentence + "&quot;</span><div class ='drop_feedback'></div></div>" + $(".dropout_container").html() + "";
     $("#UserMsgBox").append(dp);
@@ -129,7 +137,7 @@ function show_dropdown(posX, posY) {
     $(".dropout").hover(function() {
         var indeks = $(this).index();
         user_select = indeks;
-        console.log(indeks)
+        console.log("user_select:  " + indeks)
         $(".drop_spm").css("background-color", colors[indeks]);
     });
 
@@ -159,6 +167,7 @@ function clicked_dropout(objekt) {
     //console.log("clicked: " + indeks)
 
 
+
     //hide_dropout();
     check_answers();
 }
@@ -177,6 +186,8 @@ function hide_dropout() {
 
 function check_answers() {
 
+    $(".feedback_container").remove();
+
     console.log("user_select: " + user_select);
     var click = 0;
     fejl++;
@@ -187,10 +198,11 @@ function check_answers() {
     var fejl_i_svar = false;
     var f_faglig = false;
     var antal_klasser = $(".markering").eq(active_object).attr('class').split(' ').length;
+    korrekt_array = [];
 
     if (antal_klasser > 2) {
         f_faglig = true;
-        korrekt_array = [];
+
         for (var i = 1; i < antal_klasser; i++) {
             korrekt_val = $(".markering").eq(active_object).attr('class').split(' ')[i];
             korrekt_val = parseInt(korrekt_val.substring(korrekt_val.length - 1, korrekt_val.length));
@@ -204,20 +216,19 @@ function check_answers() {
     }
 
     if (korrekt == user_select || korrekt_array.indexOf(user_select) > -1) {
-        console.log("correct / f_faglig = " + f_faglig);
+        console.log("korrekt: " + korrekt + ", korrekt_array:" + korrekt_array + ", f_faglig = " + f_faglig);
 
         correct_sound();
 
-        $(".dropout").off("click");
-        $(".dropout").off("mouseenter mouseleave");
+        $(".drop_left").hide();
 
         $(".markering").eq(active_object).addClass("korrekt");
 
         //$(".dropout, .drop_out_header, .drop_spm").hide();
         if (f_faglig == false) {
-            $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>Markeringen er interessant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object]);
+            $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[user_select]).css("text-decoration", "none");
-
+            $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er interessant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
         } else {
             var korrekte_fag_string = "Tekststykket er <b>fællesfagligt</b> fordi det både er relevant i ";
 
@@ -240,10 +251,11 @@ function check_answers() {
             }
 
             if (user_select == 3) {
-                $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>Markeringen har " + $(".dropout").eq(user_select).html() + " interesse. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object]);
-
+                $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> har " + $(".dropout").eq(user_select).html() + " interesse. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             } else {
-                $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Delvist korrekt</span> </h3>Markeringen er i kategorien " + $(".dropout").eq(user_select).html() + ", men ikke kun relevant for dette fag alene. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object]);
+                $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Delvist korrekt</span> </h3>");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er i kategorien " + $(".dropout").eq(user_select).html() + ", men ikke kun relevant for dette fag alene. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             }
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[3]).css("text-decoration", "none");
         }
@@ -294,7 +306,8 @@ function check_answers() {
 
         console.log("error / f_faglig = " + f_faglig + "Korrekt: " + korrekt + "usr select: " + user_select);
 
-        $(".drop_feedback").html("<h3>Du har svaret <span class='label label-danger'>Forkert</span> </h3>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b>er ikke i kategorien " + $(".dropout").eq(user_select).html() + "</p>");
+        $(".drop_feedback").html("<h3>Du har svaret <span class='label label-danger'>Forkert</span> </h3>");
+        $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'> Markeringen <b>" + $(".markering").eq(active_object).html() + " </b>er ikke i kategorien " + $(".dropout").eq(user_select).html() + "</h4>");
         error_sound();
 
         $(".markering").eq(active_object).animate({
@@ -342,13 +355,35 @@ function slutfeedback() {
     $(".btn-again").click(function() {
         location.reload();
     });
-
-
 }
 
 function snyd() {
 
     $(".markering").each(function(index) {
         $(this).hide();
+    });
+}
+
+function showSource(source) {
+
+
+    if (source == "video") {
+        UserMsgBox('body', '<h3>Reagans tale: Ondskabens Imperium </h3><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til opgaven</div>');
+        $("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
+        $(".CloseClass").hide();
+    } else if (source == "tekst") {
+
+        UserMsgBox("body", "<div class='brod_txt textHolder'>" + JsonObj[0].tekst_msg + "</div><div class='btn btn-info btn_ready'>Jeg er klar til opgaven</div>");
+        $("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
+        $(".CloseClass").hide();
+    }
+    $(".MsgBox_bgr").off("click");
+
+    $(".btn_ready").click(function() {
+
+        $(".MsgBox_bgr").fadeOut(function() {
+            $(".ovelse_container").fadeIn(300);
+            $(".MsgBox_bgr").remove();
+        });
     });
 }
