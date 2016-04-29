@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     enable_audio();
 
-    //$(".ovelse_container").fadeOut(0);
+    $(".ovelse_container").fadeOut(0);
 
     $(".dropout_container").fadeOut(0);
 
@@ -56,7 +56,7 @@ function init() {
     $(".tekst_container").append("<div class='brod_txt textHolder'>" + JsonObj[0].tekst + "</div>");
     $(".textHolder").append("<div class='textHolder_gradient'></div>");
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1><h4 class='instruktion'><span class='glyphicon glyphicon-arrow-right'></span>" + JsonObj[0].Instruktion + "</h4>")
-    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion));
+    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));
 
     $('#explanationWrapper').html(explanation(JsonObj[0].explanation));
 
@@ -77,14 +77,11 @@ function init() {
     $(".box").each(function(index) {
         $(this).css("background-color", colors[index]);
     });
-    $(".txt_select").each(function(index) {
-        $(this).css("background-color", colors[index]);
-    });
     $(".dropout").each(function(index) {
         $(this).css("background-color", colors[index]);
-    });
+    });   
 
-    $(".box_select, .txt_select").click(function() {
+    $(".box_select").click(function() {
         clicked_forklaring($(this));
     });
     $(".btn_snyd").click(function() {
@@ -95,7 +92,7 @@ function init() {
 function clicked_forklaring(obj) {
 
     if (obj.attr("class") == "txt_select") {
-        var indeks = obj.index()-1;
+        var indeks = obj.index();
     } else {
         var indeks = obj.index()-1;
     }
@@ -368,21 +365,29 @@ function showSource(source) {
 
 
     if (source == "video") {
-        UserMsgBox('body', '<h3>Reagans tale: Ondskabens Imperium </h3><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til opgaven</div>');
-        $("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
-        $(".CloseClass").hide();
+        UserMsgBox('body', JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + '<br/><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til at gå igang med opgaven</div>');
+        //$("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
+        
     } else if (source == "tekst") {
 
-        UserMsgBox("body", "<div class='brod_txt textHolder'>" + JsonObj[0].tekst_msg + "</div><div class='btn btn-info btn_ready'>Jeg er klar til opgaven</div>");
-        $("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
-        $(".CloseClass").hide();
+        UserMsgBox("body", JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + "<br/><em>" + JsonObj[0].tekst_msg + "</em><div class='btn btn-info btn_ready'>Jeg er klar til at gå igang med opgaven</div>");
+        //$("#UserMsgBox").prepend();
     }
     $(".MsgBox_bgr").off("click");
 
-    $(".btn_ready").click(function() {
+    $(".btn_ready, .CloseClass").click(function() {
 
         $(".MsgBox_bgr").fadeOut(function() {
-            $(".ovelse_container").fadeIn(300);
+            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));
+            $(".txt_select").each(function(index) {
+        $(this).css("background-color", colors[index]);
+    });
+   
+
+    $(".box_select, .txt_select").click(function() {
+        clicked_forklaring($(this));
+    });
+            $(".ovelse_container").fadeIn(1000);
             $(".MsgBox_bgr").remove();
         });
     });
