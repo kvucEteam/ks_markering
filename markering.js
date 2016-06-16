@@ -15,6 +15,7 @@ var json_streng;
 $(document).ready(function() {
 
     enable_audio();
+    rotateCheck();
 
     $(".ovelse_container").fadeOut(0);
 
