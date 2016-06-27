@@ -14,8 +14,6 @@ var json_streng;
 
 $(document).ready(function() {
 
-    alert ("velkommen, Michael!");
-
     enable_audio();
     rotateCheck();
 
