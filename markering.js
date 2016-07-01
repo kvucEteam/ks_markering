@@ -372,7 +372,7 @@ function showSource(source) {
         
     } else if (source == "tekst") {
 
-        UserMsgBox("body", JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + "<br/><em>" + JsonObj[0].tekst_msg + "</em><div class='btn btn-info btn_ready'>Jeg er klar til at gå igang med opgaven</div>");
+        UserMsgBox("body", JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + "<br/><em>" + JsonObj[0].tekst_msg + "</em><div class='btn btn-info btn_ready'>Jeg er klar til at gå i gang med opgaven</div>");
         //$("#UserMsgBox").prepend();
     }
     $(".MsgBox_bgr").off("click");
