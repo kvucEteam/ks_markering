@@ -57,7 +57,8 @@ function init() {
     $(".tekst_container").append("<div class='brod_txt textHolder'>" + JsonObj[0].tekst + "</div>");
     $(".textHolder").append("<div class='textHolder_gradient'></div>");
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1><h4 class='instruktion'><span class='glyphicon glyphicon-arrow-right'></span>" + JsonObj[0].Instruktion + "</h4>")
-    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));
+    // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));  // THAN: Commented out 01-07-2016
+    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + '<div class="col-xs-12 col-md-8">'+ instruction(JsonObj[0].Instruktion_1) +'</div><div class="clear"></div>');  // THAN: Added 01-07-2016
 
     $('#explanationWrapper').html(explanation(JsonObj[0].explanation));
 
@@ -379,7 +380,8 @@ function showSource(source) {
     $(".btn_ready, .CloseClass").click(function() {
 
         $(".MsgBox_bgr").fadeOut(function() {
-            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));
+            // $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));  // THAN: Commented out 01-07-2016
+            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + '<div class="col-xs-12 col-md-8">'+ instruction(JsonObj[0].Instruktion_2) +'</div><div class="clear"></div>');     // THAN: Added 01-07-2016
             $(".txt_select").each(function(index) {
         $(this).css("background-color", colors[index]);
     });
