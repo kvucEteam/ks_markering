@@ -366,7 +366,7 @@ function showSource(source) {
 
 
     if (source == "video") {
-        UserMsgBox('body', JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + '<br/><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til at gå igang med opgaven</div>');
+        UserMsgBox('body', JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + '<br/><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til at gå i gang med opgaven</div>');
         //$("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
         
     } else if (source == "tekst") {
