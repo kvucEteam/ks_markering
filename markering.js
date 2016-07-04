@@ -229,7 +229,7 @@ function check_answers() {
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[user_select]).css("text-decoration", "none");
             $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er interessant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
         } else {
-            var korrekte_fag_string = "Tekststykket er <b>fællesfagligt</b> fordi det både er relevant i ";
+            var korrekte_fag_string = "";
 
             antal_klasser = antal_klasser - 2;
 
@@ -254,7 +254,7 @@ function check_answers() {
                 $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> har " + $(".dropout").eq(user_select).html() + " interesse. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             } else {
                 $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Delvist korrekt</span> </h3>");
-                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er i kategorien " + $(".dropout").eq(user_select).html() + ", men ikke kun relevant for dette fag alene. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er ikke kun relevant for " + $(".dropout").eq(user_select).html() + ". Tekststykket tilhører kategorien <b>fællesfaglig </b>, fordi det både er relevant for " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             }
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[3]).css("text-decoration", "none");
         }
