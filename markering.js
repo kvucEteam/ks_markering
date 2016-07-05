@@ -57,7 +57,8 @@ function init() {
     $(".tekst_container").append("<div class='brod_txt textHolder'>" + JsonObj[0].tekst + "</div>");
     $(".textHolder").append("<div class='textHolder_gradient'></div>");
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1><h4 class='instruktion'><span class='glyphicon glyphicon-arrow-right'></span>" + JsonObj[0].Instruktion + "</h4>")
-    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));
+    // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));  // THAN: Commented out 01-07-2016
+    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + '<div class="col-xs-12 col-md-8">'+ instruction(JsonObj[0].Instruktion_1) +'</div><div class="clear"></div>');  // THAN: Added 01-07-2016
 
     $('#explanationWrapper').html(explanation(JsonObj[0].explanation));
 
@@ -226,9 +227,9 @@ function check_answers() {
         if (f_faglig == false) {
             $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[user_select]).css("text-decoration", "none");
-            $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er interessant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+            $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er relevant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
         } else {
-            var korrekte_fag_string = "Tekststykket er <b>fællesfagligt</b> fordi det både er relevant i ";
+            var korrekte_fag_string = "";
 
             antal_klasser = antal_klasser - 2;
 
@@ -250,10 +251,10 @@ function check_answers() {
 
             if (user_select == 3) {
                 $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
-                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> har " + $(".dropout").eq(user_select).html() + " interesse. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> har " + $(".dropout").eq(user_select).html() + " relevans. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             } else {
                 $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Delvist korrekt</span> </h3>");
-                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er i kategorien " + $(".dropout").eq(user_select).html() + ", men ikke kun relevant for dette fag alene. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er ikke kun relevant for " + $(".dropout").eq(user_select).html() + ". Tekststykket tilhører kategorien <b>fællesfaglig </b>, fordi det både er relevant for " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             }
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[3]).css("text-decoration", "none");
         }
@@ -305,7 +306,7 @@ function check_answers() {
         console.log("error / f_faglig = " + f_faglig + "Korrekt: " + korrekt + "usr select: " + user_select);
 
         $(".drop_feedback").html("<h3>Du har svaret <span class='label label-danger'>Forkert</span> </h3>");
-        $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'> Markeringen <b>" + $(".markering").eq(active_object).html() + " </b>er ikke i kategorien " + $(".dropout").eq(user_select).html() + "</h4>");
+        $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'> Markeringen <b>" + $(".markering").eq(active_object).html() + " </b>tilhører ikke kategorien " + $(".dropout").eq(user_select).html() + ".</h4>");
         error_sound();
 
         $(".markering").eq(active_object).animate({
@@ -366,12 +367,12 @@ function showSource(source) {
 
 
     if (source == "video") {
-        UserMsgBox('body', JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + '<br/><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til at gå igang med opgaven</div>');
+        UserMsgBox('body', JsonObj[0].tekst_msg_header + "<em>" + JsonObj[0].tekstforklaring + '</em><br/><div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="' + JsonObj[0].videolink + '"></iframe></div><div class="btn btn-info btn_ready">Jeg er klar til at gå i gang med opgaven</div>');
         //$("#UserMsgBox").prepend(JsonObj[0].tekstforklaring);
         
     } else if (source == "tekst") {
 
-        UserMsgBox("body", JsonObj[0].tekst_msg_header + JsonObj[0].tekstforklaring + "<br/><em>" + JsonObj[0].tekst_msg + "</em><div class='btn btn-info btn_ready'>Jeg er klar til at gå igang med opgaven</div>");
+        UserMsgBox("body", JsonObj[0].tekst_msg_header + "<em>" + JsonObj[0].tekstforklaring + "</em><br/>" + JsonObj[0].tekst_msg + "<div class='btn btn-info btn_ready'>Jeg er klar til at gå i gang med opgaven</div>");
         //$("#UserMsgBox").prepend();
     }
     $(".MsgBox_bgr").off("click");
@@ -379,7 +380,8 @@ function showSource(source) {
     $(".btn_ready, .CloseClass").click(function() {
 
         $(".MsgBox_bgr").fadeOut(function() {
-            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));
+            // $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));  // THAN: Commented out 01-07-2016
+            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + '<div class="col-xs-12 col-md-8">'+ instruction(JsonObj[0].Instruktion_2) +'</div><div class="clear"></div>');     // THAN: Added 01-07-2016
             $(".txt_select").each(function(index) {
         $(this).css("background-color", colors[index]);
     });
