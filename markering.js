@@ -220,6 +220,7 @@ function check_answers() {
         correct_sound();
 
         $(".drop_left").hide();
+        $(".drop_out_header, .drop_spm").hide();
 
         $(".markering").eq(active_object).addClass("korrekt");
 
@@ -227,7 +228,7 @@ function check_answers() {
         if (f_faglig == false) {
             $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[user_select]).css("text-decoration", "none");
-            $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er relevant for " + $(".dropout").eq(user_select).html() + ".<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+            $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <em>''" + $(".markering").eq(active_object).html() + "'' </em> er relevant for <b>" + $(".dropout").eq(user_select).html().toLowerCase() + "</b>.<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
         } else {
             var korrekte_fag_string = "";
 
@@ -239,22 +240,25 @@ function check_answers() {
 
                 //der er to yderligere fag (hvis antal-klasser - 1 er større end 1)
                 if (antal_klasser - i > 2) {
-                    korrekte_fag_string = korrekte_fag_string + JsonObj[0].kategorier[korrekt_array[i]] + ", ";
+                    korrekte_fag_string = korrekte_fag_string + "<b>" + JsonObj[0].kategorier[korrekt_array[i]] + "</b>, ";
                 } else if (antal_klasser - i == 2) {
                     //case: der er 1 yderligere fag (hvis antal-klasser - 1 er større end 1)
-                    korrekte_fag_string = korrekte_fag_string + JsonObj[0].kategorier[korrekt_array[i]] + " og ";
+                    korrekte_fag_string = korrekte_fag_string + "<b>" +JsonObj[0].kategorier[korrekt_array[i]] + "</b> og ";
                 } else if (antal_klasser - i < 2) {
                     console.log("//case: der ikke yderligere fag at remse op");
-                    korrekte_fag_string = korrekte_fag_string + JsonObj[0].kategorier[korrekt_array[i]] + ".";
+                    korrekte_fag_string = korrekte_fag_string + "<b>" + JsonObj[0].kategorier[korrekt_array[i]] + "</b>.";
                 }
             }
 
+            korrekte_fag_string = korrekte_fag_string.toLowerCase(); 
+
             if (user_select == 3) {
+
                 $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Korrekt</span> </h3>");
-                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> har " + $(".dropout").eq(user_select).html() + " relevans. " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <em>''" + $(".markering").eq(active_object).html() + "'' </em> har <b>" + $(".dropout").eq(user_select).html().toLowerCase() + "</b> relevans. <br/>Tekststykket er både relevant for   " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             } else {
                 $(".drop_feedback").html("<h3>Du har svaret <span class='label label-success'>Delvist korrekt</span> </h3>");
-                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <b>" + $(".markering").eq(active_object).html() + " </b> er ikke kun relevant for " + $(".dropout").eq(user_select).html() + ". Tekststykket tilhører kategorien <b>fællesfaglig </b>, fordi det både er relevant for " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
+                $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'>Markeringen <em>''" + $(".markering").eq(active_object).html() + "'' </em> tilhører kategorien <b>fællesfaglig</b>. <br/>Tekststykket er relevant for både " + korrekte_fag_string + "<br/><br/>" + JsonObj[0].feedback[active_object] + "</h4");
             }
             $(".markering").eq(active_object).attr("value", user_select).css("background-color", colors[3]).css("text-decoration", "none");
         }
@@ -306,7 +310,7 @@ function check_answers() {
         console.log("error / f_faglig = " + f_faglig + "Korrekt: " + korrekt + "usr select: " + user_select);
 
         $(".drop_feedback").html("<h3>Du har svaret <span class='label label-danger'>Forkert</span> </h3>");
-        $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'> Markeringen <b>" + $(".markering").eq(active_object).html() + " </b>tilhører ikke kategorien " + $(".dropout").eq(user_select).html() + ".</h4>");
+        $("#UserMsgBox").append("<h4 class='col-xs-12 feedback_container'> Markeringen <em>''" + $(".markering").eq(active_object).html() + "'' </em>tilhører ikke kategorien <b>" + $(".dropout").eq(user_select).html().toLowerCase() + "</b>.</h4>");
         error_sound();
 
         $(".markering").eq(active_object).animate({
