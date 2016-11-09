@@ -58,9 +58,12 @@ function init() {
     $(".textHolder").append("<div class='textHolder_gradient'></div>");
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1><h4 class='instruktion'><span class='glyphicon glyphicon-arrow-right'></span>" + JsonObj[0].Instruktion + "</h4>")
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));  // THAN: Commented out 01-07-2016
-    $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + '<div>'+ instruction(JsonObj[0].Instruktion_1) +'</div><div class="clear"></div>');  // THAN: Added 01-07-2016
+    $(".container-fluid").prepend("<h1>" + JsonObj[0].title + "</h1>"); // + '<div>'+ instruction(JsonObj[0].Instruktion_1) +'</div><div class="clear"></div>');  // THAN: Added 01-07-2016
+//$('.instr_container').html(instruction("<h1>" + JsonObj[0].title + "</h1>" + '<div>'+ instruction(JsonObj[0].Instruktion_1) +'</div><div class="clear"></div>'));
+$('.instr_container').html(instruction(JsonObj[0].Instruktion_1));
 
     $('#explanationWrapper').html(explanation(JsonObj[0].explanation));
+    
 
     // fyld knapperne op med den data der findes i json filen:
     for (var i = 0; i < JsonObj[0].kategorier.length; i++) {
