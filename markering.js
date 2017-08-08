@@ -17,7 +17,7 @@ $(document).ready(function() {
     enable_audio();
     rotateCheck();
 
-    $(".ovelse_container").fadeOut(0);
+    //$(".ovelse_container").fadeOut(0);
 
     $(".dropout_container").fadeOut(0);
 
@@ -50,11 +50,11 @@ $(document).ready(function() {
     // $(".checkAnswer").click(check_answers);
 
     //init();
-
+microhint($(".markering").eq(0), "Klik på de grå områder i teksten, og klassificér dem efter kategori.");
 });
 
 function init() {
-    $(".tekst_container").append("<div class='brod_txt textHolder'>" + JsonObj[0].tekst + "</div>");
+    $(".tekst_container").append("<div class='brod_txt textHolder'><div class='microhint_container'></div>" + JsonObj[0].tekst + "</div>");
     $(".textHolder").append("<div class='textHolder_gradient'></div>");
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1><h4 class='instruktion'><span class='glyphicon glyphicon-arrow-right'></span>" + JsonObj[0].Instruktion + "</h4>")
     // $(".instr_container").prepend("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_1));  // THAN: Commented out 01-07-2016
@@ -388,7 +388,7 @@ function showSource(source) {
 
         $(".MsgBox_bgr").fadeOut(function() {
             // $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + instruction(JsonObj[0].Instruktion_2));  // THAN: Commented out 01-07-2016
-            $(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + '<div>'+ instruction(JsonObj[0].Instruktion_2) +'</div><div class="clear"></div>');     // THAN: Added 01-07-2016
+            //$(".instr_container").html("<h1>" + JsonObj[0].title + "</h1>" + '<div>'+ instruction(JsonObj[0].Instruktion_2) +'</div><div class="clear"></div>');     // THAN: Added 01-07-2016
             $(".txt_select").each(function(index) {
         $(this).css("background-color", colors[index]);
     });
